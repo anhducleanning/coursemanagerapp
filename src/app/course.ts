@@ -1,7 +1,7 @@
 export interface Course{
-    courseid: number;
+    corseId: number;
     title:String;
     description:String;
-    imageurl:String;
+    imageUrl:String;
     link:String;
 }
