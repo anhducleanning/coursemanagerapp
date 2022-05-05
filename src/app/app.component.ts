@@ -1,4 +1,6 @@
+import { Course } from './course';
 import { Component } from '@angular/core';
+import { CourseService } from './course.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'coursemanagerapp';
+   public course: Course[] = [];
+
+   constructor(private coureseService: CourseService) { }
+
+   public getCourese(): void{
+      this.coureseService.getCourse().subscribe(
+        (response: Course[])=>{
+          this.course = response;
+        }
+      )
+   }
 }
