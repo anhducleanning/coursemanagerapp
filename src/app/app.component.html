@@ -1,3 +1,4 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" style="color: white">Employee Manager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
@@ -13,13 +14,23 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                         <input  type="search"  (ngModelChange)="searchCourse(key.value)" #key="ngModel" ngModel name="key" id="searchName" class="form-control mr-sm-2"
-                                placeholder="Search employees..." required />
+                                placeholder="Search course..." required />
                 </form>
         </div>
 </nav>
 
+<!-- Slider Show -->
+<div style="width:1700px; height: 500px; text-align:center;margin:0; padding:0;">
+  <ng-image-slider #nav
+    [images]="slider"
+    [infinite]="true"
+    [autoSlide]="2"
+    [imageSize]="{width: '1200px', height: '500px'}"
+    slideImage="1"></ng-image-slider>
+</div>
+
 <!-- Display Course -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+
 <div class="container" id="main-container">
         <div class="row">
                 <div *ngFor="let item of courses" class="col-md-6 col-xl-3">
@@ -39,7 +50,7 @@
                                                 <i class=""></i><a>{{ item?.description }}</a>
                                         </li>
                                         <li class="list-group-item">
-                                                <i class=""></i><a href="{{ item?.link }}">Link</a>
+                                                <i class=""></i><a href="{{ item?.link }}">Click Go Course</a>
                                         </li>
                                 </ul>
                                 <div class="card-body">
@@ -143,7 +154,6 @@
                                                         placeholder="Link" required />
                                         </div>
 
-                                        
                                         <div class="modal-footer">
                                                 <button type="button" id="add-employee-form" class="btn btn-secondary"
                                                         data-dismiss="modal">Close</button>
@@ -180,10 +190,43 @@
         </div>
 </div>
 
-<!-- Notification for no employees -->
-<div  class="col-lg-12 col-md-12 col-xl-12">
-        <button   type="button" class="btn btn-secondary" data-dismiss="modal"> No </button>
-        <div class="alert alert-info" role="alert">
-          <h4 class="alert-heading">NO COURSE!</h4> 
+
+<!-- COUNT COURES -->
+<!-- <div class="client-count-wrp mt-100 ">
+        <div class="container">
+            <div class="client-count-wrp-inner">
+                <div class="cards">
+                    <h4>{{countCounse}} COURSE</h4>
+                </div>
+            </div>
         </div>
+    </div>
+ -->
+
+ <div class="client-count-wrp mt-100 ">
+        <div class="container">
+            <div class="heading">
+                <h4>STATISTIACL</h4>
+            </div>
+            <div class="client-count-wrp-inner">
+                <div class="cards">
+                    <h4>{{countCounse}}</h4>
+                    <p>COURSE</p>
+                </div>
+                <!--card-->
+                <div class="cards">
+                    <h4>{{accuratecount}}</h4>
+                    <!--concat % sign-->
+                    <p>ONLINE</p>
+                </div>
+                
+                <!--card-->
+                <div class="cards">
+                    <h4>{{customerfeedback + ' %'}}</h4>
+                    <p>Customer Satisfaction</p>
+                </div>
+                <!--card-->
+            </div>
         </div>
+    
+    </div>

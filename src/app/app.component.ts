@@ -1,3 +1,5 @@
+import { SliderService } from './slider.service';
+import { Slider } from './slider';
 import { Course } from './course';
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from './course.service';
@@ -11,30 +13,102 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
    public courses: Course[] = [];
+   public slider : Slider[] = [];
    public editCourse: Course;
    public deleteCourse :Course;
    public countCourse :Course;
 
 
 
-   constructor(private coureseService: CourseService) { }
+// Slider 
+imageObject = [{
+  image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
+ thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
+  title: 'Hummingbirds are amazing creatures'
+}, {
+  image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg',
+  thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg'
+}, {
+  image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
+  thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
+  title: 'Example with title.'
+}];
+
+
+
+    //Count Courese
+   countCounse:number = 0;
+   countCounseStop:number = setInterval(()=>{
+    this.countCounse++;
+    this.coureseService.getCourse().subscribe(
+     (response: Course[])=>{
+       this.courses = response;
+     },
+     (error: HttpErrorResponse)=>{
+       alert(error.message);
+     }
+     )
+    if(this.countCounse ==  this.courses.length){
+     clearInterval(this.countCounseStop)
+   }
+  },120)
+
+  //ONLINE
+  accuratecount:number = 0;
+  accuratecountstop:any = setInterval(()=>{
+    this.accuratecount++;
+    if(this.accuratecount == 95)
+    {
+      
+      clearInterval(this.accuratecountstop);
+    }
+  },10) 
+
+  //% QUAY LẠI
+  customerfeedback:number = 0;
+  customerfeedbackstop:any = setInterval(()=>{
+    this.customerfeedback++;
+    if(this.customerfeedback == 85)
+    {
+      
+      clearInterval(this.customerfeedbackstop);
+    }
+  },10)
+
+
+   constructor(private coureseService: CourseService, private sliderService: SliderService){ }
 
 
    ngOnInit()  {
      this.getCourese();
+     this.getSlider();
+     console.log("anh duc");
+    
    }
-
+    //Get Course
    public getCourese(): void{
       this.coureseService.getCourse().subscribe(
         (response: Course[])=>{
           this.courses = response;
-          console.log(this.courses);
+          console.log(this.courses.length);
         },
         (error: HttpErrorResponse)=>{
           alert(error.message);
         }
         )
-      
+   }
+
+   //Get Slider
+   public getSlider(): void{
+     this.sliderService.getSlider().subscribe(
+       (reponse: Slider[]) =>{
+         this.slider = reponse;
+         console.log(this.slider);
+       },
+       (error: HttpErrorResponse)=>{
+         alert(error.message);
+       }
+     )
    }
 
    public onAddCourse(addForm: NgForm): void {
@@ -44,6 +118,7 @@ export class AppComponent implements OnInit {
           console.log(response);
           this.getCourese();
           addForm.reset();
+          window.location.reload();
         },
         (error : HttpErrorResponse)=>{
           alert(error.message);
@@ -58,6 +133,7 @@ export class AppComponent implements OnInit {
        (response: Course) =>{
          console.log(response);
          this.getCourese();
+         window.location.reload();
        },
        (error : HttpErrorResponse)=>{
          alert(courseId);
@@ -73,6 +149,7 @@ export class AppComponent implements OnInit {
      (response: void) =>{
        console.log(response);
        this.getCourese();
+       window.location.reload();
      },
      (error : HttpErrorResponse)=>{
        alert(courseId);
@@ -80,6 +157,8 @@ export class AppComponent implements OnInit {
      }
  )
 }
+
+
 
 public searchCourse(key:string): void{
     console.log(key);
@@ -101,6 +180,10 @@ public searchCourse(key:string): void{
 
 
   public onOpenModal(course: Course, mode: string): void {
+
+  
+  
+
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -122,5 +205,5 @@ public searchCourse(key:string): void{
     button.click();
   }
 
-
+  
 }
